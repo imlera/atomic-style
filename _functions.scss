@@ -1,0 +1,46 @@
+@use "sass:map";
+
+@function to_rem($num) {
+  @return calc($num / 16) + rem;
+}
+
+@function map_get($ob, $name...) {
+  $result: $ob;
+  @each $value in $name {
+    $result: map_get($result, $value);
+  }
+
+  @return $result;
+}
+
+@function join($arr, $separator) {
+  $str: "";
+  @each $val in $arr {
+    $str: if($str == "", $val, "#{$str}#{$separator}#{$val}");
+  }
+
+  @return $str;
+}
+
+@function add_escaped_percent($str) {
+  $result: "";
+
+  @for $i from 1 through str-length($str) {
+    $char: str-slice($str, $i, $i);
+    @if $char == "%" {
+      $result: $result + "\\%";
+    } @else {
+      $result: $result + $char;
+    }
+  }
+
+  @return $result;
+}
+
+@function empty($value) {
+  @return
+      $value == ""
+      or $value == false
+      or $value == null
+      or $value == [];
+}

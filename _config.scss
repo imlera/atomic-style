@@ -1,0 +1,238 @@
+$config: (
+    colors: (
+        root: "--color",
+        palette: (
+            white: #FFF,
+            black: #000,
+        ),
+    ),
+    typography: (
+        root: "--font-family",
+        fontFamilies: (
+            system-serif: (
+                name: "System Serif",
+                fontFamily: "Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol"
+            ),
+            system-sans-serif: (
+                name: "System Sans-serif",
+                fontFamily: "-apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif"
+            ),
+            open-sans: (
+                name: "Open Sans",
+                fontFamily: "\"Open Sans\", sans-serif",
+                fontFace: [
+                (
+                    fontFamily: "Open Sans",
+                    fontStyle: "normal",
+                    fontDisplay: "swap",
+                    fontStretch: "normal",
+                    fontWeight: "300 900",
+                    src: [
+                        "file:./assets/fonts/OpenSans/opensans-regular.woff",
+                        "file:./assets/fonts/OpenSans/opensans-regular.woff2"
+                    ]
+                ),
+            ],
+            ),
+        ),
+    ),
+    mediaQueries: (
+        xl: 1280px,
+        m: 768px,
+        s: 576px,
+        xs: 320px
+    ),
+    classes: [
+        (
+            slug: c,
+            property: color,
+            value: "OB_COLOR_PALETTE"
+        ),
+        (
+            slug: bgc,
+            property: background-color,
+            value: "OB_COLOR_PALETTE",
+        ),
+        (
+            slug: d,
+            property: display,
+            value: (
+                none: none,
+                block: block,
+                flex: flex,
+                inline-flex: inline-flex,
+                inline: inline,
+                inline-block: inline-block,
+                list-item: list-item,
+                compact: compact,
+                table: table,
+                inline-table: inline-table,
+                table-caption: table-caption,
+                table-column: table-column,
+                table-column-group: table-column-group,
+                table-header-group: table-header-group,
+                table-footer-group: table-footer-group,
+                table-row: table-row,
+                table-row-group: table-row-group,
+                table-cell: table-cell,
+            ),
+        ),
+        (
+            slug: g,
+            property: gap,
+            value: [],
+            interval: (
+                to: 100,
+                from: 0,
+                step: 2,
+            ),
+        ),
+        (
+            slug: cur,
+            property: cursor,
+            value: (
+                auto: auto,
+                alias: alias,
+                all-scroll: all-scroll,
+                e-resize: e-resize,
+                ew-resize: ew-resize,
+                none: none,
+                no-drop: no-drop,
+                not-allowed: not-allowed,
+                n-resize: n-resize,
+                ne-resize: ne-resize,
+                nw-resize: nw-resize,
+                ns-resize: ns-resize,
+                nesw-resize: nesw-resize,
+                nwse-resize: nwse-resize,
+                pointer: pointer,
+                progress: progress,
+                cell: cell,
+                copy: copy,
+                context-menu: context-menu,
+                crosshair: crosshair,
+                col-resize: col-resize,
+                s-resize: s-resize,
+                se-resize: se-resize,
+                sw-resize: sw-resize,
+                grab: grab,
+                grabbing: grabbing,
+                wait: wait,
+                w-resize: w-resize,
+                zoom-in: zoom-in,
+                zoom-out: zoom-out,
+                help: help,
+                move: move,
+                text: text,
+                default: default,
+                row-resize: row-resize,
+                vertical-text: vertical-text,
+            ),
+        ),
+    ],
+
+    classes1: [
+        (
+            slug: align,
+            property: (
+                self: slign-self,
+                items: align-items,
+                content: align-content,
+            ),
+            value: (
+                center: center,
+                inherit: inherit,
+                stretch: stretch,
+                baseline: baseline,
+                end: flex-end,
+                start: flex-start
+            ),
+        ),
+
+        (
+            slug: font,
+            value: [
+                (
+                    property: font-family,
+                    value: "$fontFamilies",
+                ),
+                (
+                    slug: weight,
+                    property: font-weight,
+                    value: [400, 500, 600, 700, 800, 900],
+                ),
+                (
+                    property: font-size,
+                    value: [3, 11],
+                    interval: (
+                        to: 80,
+                        from: 4,
+                        step: 2,
+                    ),
+                ),
+            ],
+        ),
+        (
+            slug: border,
+            value: [
+                (
+                    property: border-color,
+                    value: "$colors",
+                ),
+                (
+                    property: border,
+                    value: [1, 2, 5],
+                ),
+                (
+                    slug: radius,
+                    property: border-radius,
+                    value: [1, 2, 5],
+                ),
+                (
+                    property: border-style,
+                    value: (
+                        none: none,
+                        hidden: hidden,
+                        dotted: dotted,
+                        dashed: dashed,
+                        solid: solid,
+                        double: double,
+                        groove: groove,
+                        ridge: ridge,
+                        inset: inset,
+                        outset: outset,
+                        unset: unset,
+                        inherit: inherit,
+                        initial: initial,
+                    ),
+                ),
+            ],
+        ),
+        (
+            slug: flex,
+            value: [
+                (
+                    property: display,
+                    value: flex
+                ),
+                (
+                    property: flex-wrap,
+                    value: (
+                        wrap: wrap,
+                        nowrap: nowrap,
+                        wrap-reverse: wrap-reverse,
+                    )
+                ),
+                (
+                    property: flex-direction,
+                    value: (
+                        row: row,
+                        row-reverse: row-reverse,
+                        column: column,
+                        column-reverse: column-reverse,
+                    )
+                ),
+            ],
+        ),
+    ],
+);

@@ -1,0 +1,126 @@
+@use "sass:list";
+@use "sass:math";
+@use "sass:string";
+@use "config" as conf;
+@use "functions" as fn;
+
+$OB_COLOR_PALETTE: map_get(conf.$config, "colors", "palette");
+$OB_MEDIA_QUERIES: map_get(conf.$config, "mediaQueries");
+
+//region Content
+
+@mixin media_query($px) {
+  @media screen and (max-width: #{$px}) {
+    @content;
+  }
+}
+
+//endregion
+
+//region Root
+//endregion
+
+//region Classes
+
+@mixin the_classes() {
+  $ob_classes: map_get(conf.$config, "classes");
+
+  @each $class in $ob_classes {
+    $slug: map_get($class, "slug");
+    $property: map_get($class, "property");
+
+    $value: map_get($class, "value");
+    @if fn.empty($value) == false {
+      @include the_class_by_type($slug, $property, $value);
+    }
+
+    $interval: map_get($class, "interval");
+    @if fn.empty($interval) == false {
+      @include the_class_by_interval($slug, $property, $interval);
+    }
+  }
+}
+
+@mixin the_class_by_type($slug, $property, $value) {
+  @if type-of($value) == "map" {
+    @include the_class_by_ob($slug, $property, $value);
+  } @else if type-of($value) == "list" {
+    @include the_class_by_ar($slug, $property, $value);
+  } @else if type-of($value) == "string" {
+    @include the_class_by_str($slug, $property, $value);
+  } @else {
+    @debug "Неизвестный тип";
+  }
+}
+
+@mixin the_class_by_ar($slug, $property, $ar_value) {
+  $ob_value: ();
+  @for $i from 1 through list.length($ar_value) {
+    $value: list.nth($ar_value, $i);
+    $key: $value;
+
+    @if type-of($value) == "number" {
+      // Имеет единицу измерения
+      @if unitless($value) == false {
+        @if unit($value) == "%" {
+          $key: fn.add_escaped_percent($value);
+        }
+      } @else {
+        $value: fn.to_rem($value);
+      }
+    }
+
+    $ob_value: list.join($ob_value, ($key: $value));
+  }
+
+  @include the_class_by_ob($slug, $property, $ob_value)
+}
+
+@mixin the_class_by_ob($slug, $property, $ob_value) {
+  @each $key, $val in $ob_value {
+    @include the_class($property, $val, $slug, $key);
+  }
+
+  @include the_class_media_query($slug, $property, $ob_value);
+}
+
+@mixin the_class_by_str($slug, $property, $str) {
+  @if $str == "OB_COLOR_PALETTE" {
+    @include the_class_by_ob($slug, $property, $OB_COLOR_PALETTE)
+  }
+}
+
+@mixin the_class_by_interval($slug, $property, $interval) {
+  $to: map_get($interval, "to");
+  $from: map_get($interval, "from");
+  $step: map_get($interval, "step");
+  $unit: map_get($interval, "unit");
+
+  $i: $from;
+  $ob_value: ();
+  @while $i <= $to {
+    $val: if($unit == null, fn.to_rem($i), "#{$i}#{$unit}");
+    $ob_value: list.append($ob_value, ($i, $val));
+    $i: $i + $step;
+  }
+
+  @include the_class_by_ob($slug, $property, $ob_value)
+}
+
+@mixin the_class_media_query($slug, $property, $ob_value) {
+  @each $media_slug, $media_px in $OB_MEDIA_QUERIES {
+    @include media_query($media_px) {
+      @each $ob_slug, $ob_value in $ob_value {
+        @include the_class($property, $ob_value, $slug, $media_slug, $ob_slug);
+      }
+    }
+  }
+}
+
+@mixin the_class($property, $value, $names...) {
+  .#{fn.join($names, "-")} {
+    #{$property}: #{$value}
+  }
+}
+
+// endregion
